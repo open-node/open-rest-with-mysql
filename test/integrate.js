@@ -32,6 +32,11 @@ describe('integrate', () => {
       assert.ok(model('user'));
       assert.ok(model('book'));
 
+      assert.ok(rest.Sequelize);
+      assert.ok(rest.mysql);
+      assert.ok(restWithMysql.Sequelize);
+      assert.ok(restWithMysql.mysql);
+
       done();
     });
   });

@@ -7,7 +7,7 @@ const paramHelper = require('open-rest-helper-params');
 const mysql = require('mysql');
 const Sequelize = require('sequelize');
 
-module.exports = (rest, path, config, reset) => {
+const Init = (rest, path, config, reset) => {
   /** 释放 sequelize 和 mysql 出去 */
   rest.Sequelize = Sequelize;
   rest.mysql = mysql;
@@ -33,3 +33,8 @@ module.exports = (rest, path, config, reset) => {
 
   return rest.utils.model;
 };
+
+Init.Sequelize = Sequelize;
+Init.mysql = mysql;
+
+module.exports = Init;
