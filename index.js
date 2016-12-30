@@ -12,6 +12,12 @@ const Init = (rest, path, config, reset) => {
   rest.Sequelize = Sequelize;
   rest.mysql = mysql;
 
+  /** 插件的引入 */
+  getterHelper(rest);
+  assertHelper(rest);
+  restHelper(rest);
+  paramHelper(rest);
+
   /** 定义一个函数，为了避免 eslint airbnb 的冲突 */
   Sequelize.type = (paths, len) => {
     const fn = _.get(Sequelize, paths.toUpperCase());
@@ -24,12 +30,6 @@ const Init = (rest, path, config, reset) => {
    * 将获取Model类的方法注册到 rest.utils 上
    */
   rest.utils.model = model(config, path, reset, rest);
-
-  /** 插件的引入 */
-  getterHelper(rest);
-  assertHelper(rest);
-  restHelper(rest);
-  paramHelper(rest);
 
   return rest.utils.model;
 };

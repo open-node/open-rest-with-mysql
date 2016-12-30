@@ -79,5 +79,19 @@ describe('lib/model', () => {
       process.env.NODE_ENV = NODE_ENV;
       done();
     });
+
+    it('db is null', (done) => {
+      getModel = model(null, `${__dirname}/models`, null, rest);
+      assert.ok(getModel instanceof Function);
+      assert.deepEqual({}, getModel());
+      done();
+    });
+
+    it('model path is null', (done) => {
+      getModel = model({}, null, null, rest);
+      assert.ok(getModel instanceof Function);
+      assert.deepEqual({}, getModel());
+      done();
+    });
   });
 });
