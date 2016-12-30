@@ -7,15 +7,15 @@ const mysql = require('mysql');
 const Sequelize = require('sequelize');
 
 module.exports = (rest, path, config, reset) => {
+  /** 释放 sequelize 和 mysql 出去 */
+  rest.Sequelize = Sequelize;
+  rest.mysql = mysql;
+
   /**
    * model 的初始化
    * 将获取Model类的方法注册到 rest.utils 上
    */
   rest.utils.model = model(config, path, reset, rest);
-
-  /** 释放 sequelize 和 mysql 出去 */
-  rest.Sequelize = Sequelize;
-  rest.mysql = mysql;
 
   /** 插件的引入 */
   getterHelper(rest);
