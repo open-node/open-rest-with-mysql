@@ -13,8 +13,8 @@ const service = {
 
 describe('integrate', () => {
   describe('#inited', () => {
-    const server = rest({ routers, controllers, middleWares, service });
     const model = restWithMysql(rest, `${__dirname}/models`, config.db);
+    const server = rest({ routers, controllers, middleWares, service });
     server.listen(8989, '127.0.0.1');
 
     it('helper init completed', (done) => {
@@ -32,6 +32,19 @@ describe('integrate', () => {
       assert.ok(model('user'));
       assert.ok(model('book'));
 
+      done();
+    });
+  });
+
+  describe('#model type error', () => {
+    it('catch unexception', (done) => {
+      assert.throws(() => {
+        restWithMysql(rest, `${__dirname}/model-type-error`, config.db);
+      }, (error) => (
+        error instanceof Error && (
+          error.message === 'Sequelize types non-exists: hello.world'
+        )
+      ));
       done();
     });
   });

@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const model = require('./lib/model');
 const getterHelper = require('open-rest-helper-getter');
 const assertHelper = require('open-rest-helper-assert');
@@ -10,6 +11,13 @@ module.exports = (rest, path, config, reset) => {
   /** 释放 sequelize 和 mysql 出去 */
   rest.Sequelize = Sequelize;
   rest.mysql = mysql;
+
+  /** 定义一个函数，为了避免 eslint airbnb 的冲突 */
+  Sequelize.type = (paths, len) => {
+    const fn = _.get(Sequelize, paths.toUpperCase());
+    if (!fn) throw Error(`Sequelize types non-exists: ${paths}`);
+    return len == null ? fn : fn(len);
+  };
 
   /**
    * model 的初始化
