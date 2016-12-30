@@ -1,11 +1,11 @@
-const rest = require('../../open-rest/');
+const rest = require('open-rest');
 const assert = require('assert');
 const restWithMysql = require('../');
 const config = require('./app/configs');
 const routers = require('./app/routes');
+const middleWares = require('./app/middle-wares');
 
 const controllers = rest.utils.getModules(`${__dirname}/app/controllers`, 'js');
-const middleWares = rest.utils.getModules(`${__dirname}/app/middle-wares`, 'js');
 const service = {
   name: 'open-rest-with-mysql',
   version: '1.0.0',
