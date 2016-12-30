@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "6"
+  - "7"
+
+services:
+  - mysql
+
+before_script:
+  - "mysql -e 'create database open_rest;'"
+
+after_success:
+  - codecov
