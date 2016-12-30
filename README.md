@@ -9,7 +9,7 @@ MySQL & Sequlize as store, Base on open-rest
 <pre> >= 6 </pre>
 
 ## Open-rest version
-<pre> ~8</pre>
+<pre> >= 8</pre>
 
 
 ## Installation
