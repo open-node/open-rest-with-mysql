@@ -14,7 +14,7 @@ const service = {
 describe('integrate', () => {
   describe('#inited', () => {
     const server = rest({ routers, controllers, middleWares, service });
-    restWithMysql(rest, `${__dirname}/models`, config.db);
+    const model = restWithMysql(rest, `${__dirname}/models`, config.db);
     server.listen(8989, '127.0.0.1');
 
     it('helper init completed', (done) => {
@@ -27,6 +27,10 @@ describe('integrate', () => {
       assert.ok(rest.utils.model('team'));
       assert.ok(rest.utils.model('user'));
       assert.ok(rest.utils.model('book'));
+
+      assert.ok(model('team'));
+      assert.ok(model('user'));
+      assert.ok(model('book'));
 
       done();
     });
