@@ -22,4 +22,6 @@ module.exports = (rest, path, config, reset) => {
   assertHelper(rest);
   restHelper(rest);
   paramHelper(rest);
+
+  return rest.utils.model;
 };
