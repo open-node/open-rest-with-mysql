@@ -33,7 +33,7 @@ const service = {
 };
 
 const server = rest({ routers, controllers, middleWares, service });
-restWithMysql(rest, `${__dirname}/models`, config.db);
+const model = restWithMysql(rest, `${__dirname}/models`, config.db);
 server.listen(8989, '127.0.0.1');
 ```
 
