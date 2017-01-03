@@ -28,10 +28,6 @@
   "dependencies": {
     "lodash": "4.17.3",
     "mysql": "2.5.2",
-    "open-rest-helper-assert": "0.6.0",
-    "open-rest-helper-getter": "0.6.0",
-    "open-rest-helper-params": "0.5.0",
-    "open-rest-helper-rest": "0.8.0",
     "sequelize": "3.24.3"
   },
   "devDependencies": {

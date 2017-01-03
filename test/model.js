@@ -13,16 +13,16 @@ describe('lib/model', () => {
     utils.logger.error = () => {};
 
     it('model dir non-exists', (done) => {
-      getModel = model(db, `${__dirname}/models-non-exists`, true, rest);
-      assert.ok(true);
+      getModel = model(db, `${__dirname}/models-non-exists`, rest);
+      assert.ok(getModel instanceof Function);
 
       done();
     });
 
     it('model dir exists', (done) => {
-      getModel = model(db, `${__dirname}/models`, null, rest);
+      getModel = model(db, `${__dirname}/app`, rest);
 
-      assert.ok(true);
+      assert.ok(getModel instanceof Function);
       done();
     });
 
@@ -59,7 +59,7 @@ describe('lib/model', () => {
 
       process.argv.push('table-sync');
 
-      model(db, `${__dirname}/models`, null, rest);
+      model(db, `${__dirname}/app`, rest);
 
       utils.logger.info = infoLog;
       process.env.NODE_ENV = NODE_ENV;
@@ -72,25 +72,47 @@ describe('lib/model', () => {
       const infoLog = utils.logger.info;
 
       process.env.NODE_ENV = 'development';
-      model(db, `${__dirname}/models`, null, rest);
+      model(db, `${__dirname}/app`, rest);
 
-      utils.logger.error = errorLog;
       utils.logger.info = infoLog;
       process.env.NODE_ENV = NODE_ENV;
       done();
     });
 
     it('db is null', (done) => {
-      getModel = model(null, `${__dirname}/models`, null, rest);
+      getModel = model(null, `${__dirname}/app`, rest);
       assert.ok(getModel instanceof Function);
       assert.deepEqual({}, getModel());
       done();
     });
 
+    it('reset ENV isnt production', (done) => {
+      getModel = model({}, `${__dirname}/app`, rest);
+      assert.ok(getModel.reset instanceof Function);
+      assert.equal(3, _.keys(getModel()).length);
+
+      getModel.reset();
+      assert.equal(0, _.keys(getModel()).length);
+
+      done();
+    });
+
+    it('reset ENV is production', (done) => {
+      rest.utils.isProd = true;
+      getModel.reset();
+      getModel = model({}, `${__dirname}/app`, rest);
+      assert.equal(null, getModel.reset);
+      assert.equal(3, _.keys(getModel()).length);
+
+      done();
+    });
+
     it('model path is null', (done) => {
-      getModel = model({}, null, null, rest);
+      utils.logger.error = () => {};
+      getModel = model({}, null, rest);
       assert.ok(getModel instanceof Function);
       assert.deepEqual({}, getModel());
+      utils.logger.error = errorLog;
       done();
     });
   });
