@@ -19,21 +19,22 @@ npm install open-rest-with-mysql --save
 
 ## Usage
 ```js
-const rest = require('open-rest');
-const assert = require('assert');
-const restWithMysql = require('../');
-const config = require('./app/configs');
-const routers = require('./app/routes');
-const middleWares = require('./app/middle-wares');
+const openRest  = require('open-rest');
+const getter = require('open-rest-helper-getter');
+const assert = require('open-rest-helper-assert');
+const rest = require('open-rest-helper-rest');
+const params = require('open-rest-helper-params');
 
-const controllers = rest.utils.getModules(`${__dirname}/app/controllers`, 'js');
-const service = {
-  name: 'open-rest-with-mysql',
-  version: '1.0.0',
-};
+openRest
+ .plugin(U.openRestWithMysql)
+ .plugin(getter, assert, rest, params)
+ .start(`${__dirname}/app`, (error) => {
+   if (error) {
+     console.error(error);
+     process.exit();
+   }
+   console.info(`Service started at: ${new Date()}`);
+ });
 
-const server = rest({ routers, controllers, middleWares, service });
-const model = restWithMysql(rest, `${__dirname}/models`, config.db);
-server.listen(8989, '127.0.0.1');
 ```
 
