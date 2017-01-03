@@ -1,4 +1,4 @@
-const rest = require('../../open-rest/');
+const rest = require('open-rest');
 const assert = require('assert');
 const restWithMysql = require('../');
 
