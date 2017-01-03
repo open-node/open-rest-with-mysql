@@ -4,7 +4,7 @@ const restWithMysql = require('../');
 
 describe('integrate', () => {
   describe('#inited', () => {
-    const model = restWithMysql(rest, `${__dirname}/app`);
+    let model = restWithMysql(rest, `${__dirname}/app`);
 
     it('helper init completed', (done) => {
       assert.ok(rest.utils.model instanceof Function);
@@ -15,6 +15,22 @@ describe('integrate', () => {
       assert.ok(model('team'));
       assert.ok(model('user'));
       assert.ok(model('book'));
+
+      assert.ok(rest.Sequelize);
+      assert.ok(rest.mysql);
+      assert.ok(restWithMysql.Sequelize);
+      assert.ok(restWithMysql.mysql);
+
+      done();
+    });
+
+
+    it('configs non-exists', (done) => {
+      model = restWithMysql(rest, `${__dirname}`);
+      assert.ok(rest.utils.model instanceof Function);
+      assert.equal(null, rest.utils.model('team'));
+      assert.equal(null, rest.utils.model('user'));
+      assert.equal(null, rest.utils.model('book'));
 
       assert.ok(rest.Sequelize);
       assert.ok(rest.mysql);

@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const Sequelize = require('sequelize');
 
 const Init = (rest, path) => {
-  const { db } = rest.utils.require(`${path}/configs`);
+  const { db } = rest.utils.require(`${path}/configs`) || {};
 
   /** 释放 sequelize 和 mysql 出去 */
   rest.Sequelize = Sequelize;
